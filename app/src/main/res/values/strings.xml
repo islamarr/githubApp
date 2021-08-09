@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">IslamTask</string>
+    <!-- Strings related to splash -->
+    <string name="spalsh_message">Welcome to My Task</string>
+
+    <string name="no_internet_connection">Make sure you have an active Internet connection!</string>
+    <string name="error">Something went wrong, try again!</string>
+
+    <string name="payment_methods">Payment methods</string>
+    <string name="empty_list">No items currently available</string>
+
+
+</resources>
