@@ -1,15 +1,13 @@
 package com.islam.githubapp.ui.mainscreen
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.islam.githubapp.R
-import com.islam.githubapp.data.Resource
 import com.islam.githubapp.databinding.MainFragmentBinding
 import com.islam.githubapp.ui.BaseFragment
 import com.islam.githubapp.ui.adapters.MainAdapter
@@ -17,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
+private const val TAG = "zxcMainFragment"
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainFragmentBinding>() {
 
@@ -25,32 +23,23 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
     private lateinit var mainAdapter: MainAdapter
 
-   // private lateinit var applicableList: MutableList<Applicable>
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> MainFragmentBinding
         get() = MainFragmentBinding::inflate
 
     override fun setupOnViewCreated(view: View) {
 
+        setHasOptionsMenu(true)
         initRecyclerView()
         startObserver()
-
-        binding.toolbar.backBtn.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
 
     }
 
     private fun startObserver() {
 
-        lifecycleScope.launch {
-            viewModel.searchResults.collectLatest {
-                mainAdapter.submitData(it)
-            }
-        }
-
         mainAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
+                binding.listLayout.list.visibility = View.VISIBLE
+                binding.listLayout.emptyList.visibility = View.GONE
                 binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
             } else {
                 binding.listLayout.emptyList.visibility = View.GONE
@@ -63,45 +52,13 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
                     else -> null
                 }
                 errorState?.let {
+                    Log.d(TAG, "startObserver: ${it.error.message}   ${it.error.cause}")
+                    binding.listLayout.list.visibility = View.GONE
                     binding.listLayout.emptyList.visibility = View.VISIBLE
                     binding.listLayout.emptyList.text = getString(R.string.no_internet_connection)
                 }
             }
         }
-
-       /* viewModel.methods.observe(viewLifecycleOwner, Observer {
-            it?.let { result ->
-                when (result) {
-                    is Resource.Success -> {
-
-                        binding.listLayout.emptyList.visibility = View.GONE
-                        binding.listLayout.loadingProgressBar.visibility = View.GONE
-
-                      //  applicableList = result.data.networks.applicable
-
-                      *//*  if (applicableList.isEmpty()) {
-                            binding.listLayout.emptyList.visibility = View.VISIBLE
-                            return@Observer
-                        }*//*
-
-                        initRecyclerView()
-
-                    }
-                    is Resource.Error -> {
-
-                        binding.listLayout.loadingProgressBar.visibility = View.GONE
-                        binding.listLayout.emptyList.visibility = View.VISIBLE
-                        binding.listLayout.emptyList.text = result.exception
-
-                    }
-                    is Resource.Loading -> {
-
-                        binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
-
-                    }
-                }
-            }
-        })*/
 
     }
 
@@ -115,4 +72,31 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.search_bar, menu)
+        val searchView = menu.findItem(R.id.search)?.actionView as SearchView
+        searchView.queryHint = resources.getString(R.string.search_hint)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(searchText: String?): Boolean {
+                searchText!!.isNotEmpty().let {
+
+                }
+                lifecycleScope.launch {
+                    viewModel.searchResults(searchText).collectLatest {
+                        mainAdapter.submitData(it)
+                    }
+                }
+                return false
+            }
+
+        });
+
+    }
 }

@@ -14,7 +14,7 @@ import com.islam.githubapp.R
 import com.islam.githubapp.databinding.OneItemListBinding
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 
-class MainAdapter() : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
 
@@ -51,14 +51,14 @@ class MainAdapter() : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DI
     }
 
     inner class ViewHolder(itemView: OneItemListBinding) : RecyclerView.ViewHolder(itemView.root) {
-        private var label: TextView = itemView.label
-        private var logo: ImageView = itemView.logo
+        private var username: TextView = itemView.userName
+        private var userImage: ImageView = itemView.userImage
 
         fun bind(listItems: UserResponse) {
 
-            label.text = listItems.username
+            username.text = listItems.username
 
-            loadImage(itemView.context, listItems.avatarUrl, logo)
+            loadImage(itemView.context, listItems.avatarUrl, userImage)
 
         }
     }

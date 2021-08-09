@@ -4,6 +4,7 @@ import android.util.Log
 import com.islam.githubapp.data.Resource
 import com.islam.githubapp.data.network.MyTaskApi
 import com.islam.githubapp.generalUtils.ApiException
+import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.generalUtils.NoInternetException
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserListResponse
 import javax.inject.Inject
@@ -11,9 +12,9 @@ import javax.inject.Inject
 
 class DefaultMainRepository @Inject constructor(private val api: MyTaskApi) : MainRepository {
 
-    override suspend fun searchUsers(): Resource<UserListResponse> {
+    override suspend fun searchUsers(query: String, page: Int, pageSize: Int): Resource<UserListResponse> {
         return try {
-            val response = api.searchUsers("islam")
+            val response = api.searchUsers(Const.token, query, page, pageSize)
             if (response.isSuccessful) {
                 response.body()?.let {
                     return@let Resource.Success(it)
@@ -31,7 +32,7 @@ class DefaultMainRepository @Inject constructor(private val api: MyTaskApi) : Ma
     }
 
     companion object {
-        private const val TAG = "DefaultMainRepo"
+        private const val TAG = "zxcDefaultMainRepo"
     }
 
 }

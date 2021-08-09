@@ -6,8 +6,11 @@
     <string name="no_internet_connection">Make sure you have an active Internet connection!</string>
     <string name="error">Something went wrong, try again!</string>
 
-    <string name="payment_methods">Payment methods</string>
+    <string name="search">Search</string>
     <string name="empty_list">No items currently available</string>
+    <string name="image_user_desc">User Profile Pic</string>
+    <string name="search_desc">User Search</string>
+    <string name="search_hint">Search For a User</string>
 
 
 </resources>

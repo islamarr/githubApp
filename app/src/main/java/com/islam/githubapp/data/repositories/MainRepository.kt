@@ -5,6 +5,6 @@ import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserLis
 
 interface MainRepository {
 
-    suspend fun searchUsers(): Resource<UserListResponse>
+    suspend fun searchUsers(query: String, page: Int, pageSize: Int): Resource<UserListResponse>
 
 }

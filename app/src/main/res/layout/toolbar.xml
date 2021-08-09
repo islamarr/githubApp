@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/cairo_bold"
         android:gravity="center_vertical"
-        android:text="@string/payment_methods"
+        android:text="@string/search"
         android:textColor="@color/gray"
         android:textSize="@dimen/txt_size_18" />
 

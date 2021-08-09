@@ -4,21 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.islam.githubapp.data.repositories.MainRepository
+import com.islam.githubapp.generalUtils.Const
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
 
-    var searchResults =
+    fun searchResults(query: String) =
         Pager(
             config = PagingConfig(
-                pageSize = 10,
+                pageSize = Const.PAGE_SIZE,
                 enablePlaceholders = false,
-                initialLoadSize = 10
+                initialLoadSize = Const.PAGE_SIZE
             ),
             pagingSourceFactory = {
-                MainDataSource(repository)
+                MainDataSource(query, repository)
             }
         ).flow
 

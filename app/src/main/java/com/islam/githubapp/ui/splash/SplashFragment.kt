@@ -31,9 +31,9 @@ class SplashFragment : Fragment() {
 
         lifecycleScope.launch {
 
-            delay(2000)
+            delay(800)
 
-            findNavController().navigate(R.id.action_splash_to_paymentMethodsFragment)
+            findNavController().navigate(R.id.action_splash_to_mainFragment)
 
         }
 

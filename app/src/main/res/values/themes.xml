@@ -14,8 +14,8 @@
         <!-- Customize your theme here. -->
 
         <!--Removing action bar -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+   <!--     <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>-->
 
         <item name="drawerArrowStyle">@style/DrawerIcon</item>
 

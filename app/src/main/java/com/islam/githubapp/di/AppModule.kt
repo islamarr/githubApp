@@ -27,7 +27,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDefaultPaymentRepository(api: MyTaskApi) =
+    fun provideMainRepository(api: MyTaskApi) =
         DefaultMainRepository(api) as MainRepository
 
     @Singleton
