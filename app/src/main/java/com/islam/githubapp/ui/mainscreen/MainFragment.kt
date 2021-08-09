@@ -96,7 +96,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
                 return false
             }
 
-        });
+        })
 
     }
 }

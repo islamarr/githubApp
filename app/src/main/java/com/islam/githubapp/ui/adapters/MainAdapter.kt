@@ -2,16 +2,22 @@ package com.islam.githubapp.ui.adapters
 
 import android.content.Context
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.islam.githubapp.R
 import com.islam.githubapp.databinding.OneItemListBinding
+import com.islam.githubapp.generalUtils.Const
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 
 class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
@@ -53,12 +59,22 @@ class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF
     inner class ViewHolder(itemView: OneItemListBinding) : RecyclerView.ViewHolder(itemView.root) {
         private var username: TextView = itemView.userName
         private var userImage: ImageView = itemView.userImage
+        private var container: CardView = itemView.container
 
         fun bind(listItems: UserResponse) {
 
             username.text = listItems.username
 
             loadImage(itemView.context, listItems.avatarUrl, userImage)
+
+            container.setOnClickListener { view ->
+                val bundle = Bundle()
+                bundle.putString(Const.UserDetailsKey, listItems.username)
+                view!!.findNavController().navigate(
+                    R.id.action_mainFragment_to_userDetailsFragment,
+                    bundle
+                )
+            }
 
         }
     }
