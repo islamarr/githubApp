@@ -40,32 +40,39 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
             val isEmptyList = loadState.refresh is LoadState.NotLoading && mainAdapter.itemCount == 0
 
-            if (isEmptyList) {
-                binding.starterImage.visibility = View.VISIBLE
-                binding.listLayout.list.visibility = View.GONE
-                return@addLoadStateListener
-            }
+            when {
+                isEmptyList -> {
 
-            if (loadState.refresh is LoadState.Loading) {
-                binding.starterImage.visibility = View.GONE
-                binding.listLayout.list.visibility = View.VISIBLE
-                binding.listLayout.emptyList.visibility = View.GONE
-                binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
-            } else {
-                binding.listLayout.emptyList.visibility = View.GONE
-                binding.listLayout.loadingProgressBar.visibility = View.GONE
-
-                val errorState = when {
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-
-                errorState?.let {
+                    binding.starterImage.visibility = View.VISIBLE
                     binding.listLayout.list.visibility = View.GONE
-                    binding.listLayout.emptyList.visibility = View.VISIBLE
-                    binding.listLayout.emptyList.text = getString(R.string.no_internet_connection)
+
+                }
+                loadState.refresh is LoadState.Loading -> {
+
+                    binding.starterImage.visibility = View.GONE
+                    binding.listLayout.list.visibility = View.VISIBLE
+                    binding.listLayout.emptyList.visibility = View.GONE
+                    binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
+
+                }
+                else -> {
+
+                    binding.listLayout.emptyList.visibility = View.GONE
+                    binding.listLayout.loadingProgressBar.visibility = View.GONE
+
+                    val errorState = when {
+                        loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                        loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                        loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                        else -> null
+                    }
+
+                    errorState?.let {
+                        binding.listLayout.list.visibility = View.GONE
+                        binding.listLayout.emptyList.visibility = View.VISIBLE
+                        binding.listLayout.emptyList.text = getString(R.string.no_internet_connection)
+                    }
+
                 }
             }
         }
