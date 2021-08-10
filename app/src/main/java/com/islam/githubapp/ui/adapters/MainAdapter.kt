@@ -1,16 +1,16 @@
 package com.islam.githubapp.ui.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +18,9 @@ import com.bumptech.glide.Glide
 import com.islam.githubapp.R
 import com.islam.githubapp.databinding.OneItemListBinding
 import com.islam.githubapp.generalUtils.Const
+import com.islam.githubapp.generalUtils.Utils
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
+import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
 
@@ -38,6 +40,7 @@ class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF
                 return oldItem == newItem
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -59,7 +62,6 @@ class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF
     inner class ViewHolder(itemView: OneItemListBinding) : RecyclerView.ViewHolder(itemView.root) {
         private var username: TextView = itemView.userName
         private var userImage: ImageView = itemView.userImage
-        private var container: CardView = itemView.container
 
         fun bind(listItems: UserResponse) {
 
@@ -67,23 +69,39 @@ class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF
 
             loadImage(itemView.context, listItems.avatarUrl, userImage)
 
-            container.setOnClickListener { view ->
-                val bundle = Bundle()
-                bundle.putString(Const.UserDetailsKey, listItems.username)
-                view!!.findNavController().navigate(
-                    R.id.action_mainFragment_to_userDetailsFragment,
-                    bundle
-                )
+            itemView.setOnClickListener { view ->
+
+                Utils.hideKeyboard(activityContext(itemView) as Activity)
+
+                navigateToUserDetails(view, listItems)
+
             }
 
         }
+    }
+
+    private fun navigateToUserDetails(view: View, listItems: UserResponse) {
+        val bundle = Bundle()
+        bundle.putString(Const.UserDetailsKey, listItems.username)
+        view.findNavController().navigate(
+            R.id.action_mainFragment_to_userDetailsFragment,
+            bundle
+        )
     }
 
     fun loadImage(context: Context, url: String?, logo: ImageView) {
         Glide.with(context).load(Uri.parse(url))
             .placeholder(R.drawable.ic_language)
             .thumbnail(0.1f)
+            .circleCrop()
             .into(logo)
+    }
+
+    private fun activityContext(itemView: View): Context? {
+        val context = itemView.context
+        return if (context is ViewComponentManager.FragmentContextWrapper) {
+            context.baseContext
+        } else context
     }
 
 }

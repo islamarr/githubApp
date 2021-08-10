@@ -32,7 +32,7 @@ class DefaultMainRepository @Inject constructor(private val api: MyTaskApi) : Ma
     }
 
     companion object {
-        private const val TAG = "zxcDefaultMainRepo"
+        private const val TAG = "DefaultMainRepo"
     }
 
 }

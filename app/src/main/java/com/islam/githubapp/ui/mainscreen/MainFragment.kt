@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-private const val TAG = "zxcMainFragment"
+private const val TAG = "MainFragment"
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainFragmentBinding>() {
 
@@ -38,6 +38,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
         mainAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
+                binding.starterImage.visibility = View.GONE
                 binding.listLayout.list.visibility = View.VISIBLE
                 binding.listLayout.emptyList.visibility = View.GONE
                 binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
@@ -51,8 +52,8 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
                     loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
                     else -> null
                 }
+
                 errorState?.let {
-                    Log.d(TAG, "startObserver: ${it.error.message}   ${it.error.cause}")
                     binding.listLayout.list.visibility = View.GONE
                     binding.listLayout.emptyList.visibility = View.VISIBLE
                     binding.listLayout.emptyList.text = getString(R.string.no_internet_connection)
@@ -85,8 +86,10 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
             }
 
             override fun onQueryTextChange(searchText: String?): Boolean {
-                searchText!!.isNotEmpty().let {
-
+                if (searchText!!.isEmpty()) {
+                    binding.starterImage.visibility = View.VISIBLE
+                    binding.listLayout.list.visibility = View.GONE
+                    return true
                 }
                 lifecycleScope.launch {
                     viewModel.searchResults(searchText).collectLatest {
