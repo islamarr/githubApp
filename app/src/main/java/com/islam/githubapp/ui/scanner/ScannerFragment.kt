@@ -12,6 +12,7 @@ import com.islam.githubapp.ui.BaseFragment
 import io.anyline.AnylineSDK
 import io.anyline.camera.CameraController
 import io.anyline.camera.CameraOpenListener
+import io.anyline.plugin.barcode.BarcodeFormat
 import io.anyline.plugin.barcode.BarcodeScanViewPlugin
 import io.anyline.view.BaseScanViewConfig
 import io.anyline.view.ScanViewPluginConfig
@@ -41,7 +42,6 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
 
         binding.barcodeScanView.setCameraOpenListener(this)
 
-        //binding.barcodeScanView.setBarcodeFormats(BarcodeScanView.BarcodeFormat.QR_CODE, BarcodeScanView.BarcodeFormat.CODE_128);
 
         val barcodeScanviewPluginConfig =
             ScanViewPluginConfig(requireContext(), "barcode_view_config.json")
@@ -57,6 +57,8 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
         binding.barcodeScanView.scanViewPlugin = scanViewPlugin
 
         scanViewPlugin.addScanResultListener { result -> Log.d(TAG, "setupOnViewCreated: ${(result.result)}") }
+
+        scanViewPlugin.setBarcodeFormats(BarcodeFormat.AZTEC, BarcodeFormat.QR_CODE) //Mandatory not optional
 
         scanViewPlugin.addScannedBarcodesListener { scanResult ->
             val base64Result: String = scanResult.result[0]?.value.toString()
