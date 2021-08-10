@@ -11,6 +11,7 @@ import com.islam.githubapp.R
 import com.islam.githubapp.databinding.MainFragmentBinding
 import com.islam.githubapp.ui.BaseFragment
 import com.islam.githubapp.ui.adapters.MainAdapter
+import com.islam.githubapp.ui.adapters.MainLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -86,6 +87,11 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = mainAdapter
         }
+
+        binding.listLayout.list.adapter = mainAdapter.withLoadStateHeaderAndFooter(
+            header = MainLoadStateAdapter(mainAdapter),
+            footer = MainLoadStateAdapter(mainAdapter)
+        )
 
     }
 

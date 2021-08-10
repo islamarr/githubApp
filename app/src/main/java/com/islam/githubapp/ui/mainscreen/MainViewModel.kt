@@ -1,8 +1,10 @@
 package com.islam.githubapp.ui.mainscreen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.islam.githubapp.data.repositories.MainRepository
 import com.islam.githubapp.generalUtils.Const
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             pagingSourceFactory = {
                 MainDataSource(query, repository)
             }
-        ).flow
+        ).flow.cachedIn(viewModelScope)
 
 }
