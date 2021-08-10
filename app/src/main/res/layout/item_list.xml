@@ -29,7 +29,6 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/cairo_bold"
         android:gravity="center"
-        android:text="@string/empty_list"
         android:textColor="@color/gray"
         android:textSize="@dimen/txt_size_20"
         android:visibility="gone" />

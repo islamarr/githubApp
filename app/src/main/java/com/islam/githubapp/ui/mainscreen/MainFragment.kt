@@ -1,22 +1,29 @@
 package com.islam.githubapp.ui.mainscreen
 
+import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.islam.githubapp.R
 import com.islam.githubapp.databinding.MainFragmentBinding
+import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.ui.BaseFragment
 import com.islam.githubapp.ui.adapters.MainAdapter
 import com.islam.githubapp.ui.adapters.MainLoadStateAdapter
+import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val TAG = "MainFragment"
+
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainFragmentBinding>() {
 
@@ -39,7 +46,8 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
         mainAdapter.addLoadStateListener { loadState ->
 
-            val isEmptyList = loadState.refresh is LoadState.NotLoading && mainAdapter.itemCount == 0
+            val isEmptyList =
+                loadState.refresh is LoadState.NotLoading && mainAdapter.itemCount == 0
 
             when {
                 isEmptyList -> {
@@ -71,7 +79,8 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
                     errorState?.let {
                         binding.listLayout.list.visibility = View.GONE
                         binding.listLayout.emptyList.visibility = View.VISIBLE
-                        binding.listLayout.emptyList.text = getString(R.string.no_internet_connection)
+                        binding.listLayout.emptyList.text =
+                            getString(R.string.no_internet_connection)
                     }
 
                 }
@@ -99,6 +108,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
         super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.search_bar, menu)
+
         val searchView = menu.findItem(R.id.search)?.actionView as SearchView
         searchView.queryHint = resources.getString(R.string.search_hint)
 
@@ -120,5 +130,14 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
         })
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.scan -> findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
+        }
+
+        return true
     }
 }

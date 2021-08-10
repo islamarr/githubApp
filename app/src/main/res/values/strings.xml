@@ -7,12 +7,12 @@
     <string name="error">Something went wrong, try again!</string>
 
     <string name="search">Search</string>
-    <string name="empty_list">No items currently available</string>
     <string name="image_user_desc">User Profile Pic</string>
     <string name="search_desc">User Search</string>
     <string name="search_hint">Search For a User</string>
-
     <string name="retry">Retry</string>
+    <string name="scan_desc">User Scan</string>
+    <string name="scan">Scan</string>
 
 
 </resources>
