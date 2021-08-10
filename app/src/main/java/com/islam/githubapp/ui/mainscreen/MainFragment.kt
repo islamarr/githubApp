@@ -37,6 +37,15 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
     private fun startObserver() {
 
         mainAdapter.addLoadStateListener { loadState ->
+
+            val isEmptyList = loadState.refresh is LoadState.NotLoading && mainAdapter.itemCount == 0
+
+            if (isEmptyList) {
+                binding.starterImage.visibility = View.VISIBLE
+                binding.listLayout.list.visibility = View.GONE
+                return@addLoadStateListener
+            }
+
             if (loadState.refresh is LoadState.Loading) {
                 binding.starterImage.visibility = View.GONE
                 binding.listLayout.list.visibility = View.VISIBLE
@@ -86,16 +95,13 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
             }
 
             override fun onQueryTextChange(searchText: String?): Boolean {
-                if (searchText!!.isEmpty()) {
-                    binding.starterImage.visibility = View.VISIBLE
-                    binding.listLayout.list.visibility = View.GONE
-                    return true
-                }
+
                 lifecycleScope.launch {
-                    viewModel.searchResults(searchText).collectLatest {
+                    viewModel.searchResults(searchText!!).collectLatest {
                         mainAdapter.submitData(it)
                     }
                 }
+
                 return false
             }
 
