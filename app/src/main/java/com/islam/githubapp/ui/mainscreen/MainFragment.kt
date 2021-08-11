@@ -135,7 +135,9 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.scan -> findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
+            R.id.scan -> {
+               // findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
+            }
         }
 
         return true
