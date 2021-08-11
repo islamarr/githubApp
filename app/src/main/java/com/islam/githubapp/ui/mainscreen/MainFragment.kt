@@ -4,6 +4,7 @@ import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.islam.githubapp.R
@@ -129,7 +130,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
         when (item.itemId) {
             R.id.scan -> {
-                // findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
+                findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
             }
         }
 
