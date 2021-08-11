@@ -24,7 +24,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
         lifecycleScope.launch {
 
-            delay(800)
+            delay(1500)
 
             findNavController().navigate(R.id.action_splash_to_mainFragment)
 
