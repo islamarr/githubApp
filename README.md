@@ -7,8 +7,9 @@
 4- LiveData <br>
 5- ViewModel <br>
 6- Hilt DI <br>
-7- Repository <br>
-8- Navigation component <br>
-9- Data Binding <br>
-10- Unit testing (local tests + instrumented tests) <br>
-11- Anyline SDK
+7- Paging 3 <br>
+8- Repository <br>
+9- Navigation component <br>
+10- Data Binding <br>
+11- Unit testing (local tests + instrumented tests) <br>
+12- Anyline SDK
