@@ -1,4 +1,4 @@
-# SimpleTask
+# GitHub Search Users
 
 **About this project:**<br><br>
 1- MVVM <br>
