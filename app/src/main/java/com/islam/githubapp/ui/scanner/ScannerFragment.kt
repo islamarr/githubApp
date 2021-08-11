@@ -26,7 +26,7 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
         get() = FragmentScannerBinding::inflate
 
     override fun setupOnViewCreated(view: View) {
-        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         try {
             AnylineSDK.init(getString(R.string.anyline_license_key), requireActivity())
@@ -56,9 +56,17 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
 
         binding.barcodeScanView.scanViewPlugin = scanViewPlugin
 
-        scanViewPlugin.addScanResultListener { result -> Log.d(TAG, "setupOnViewCreated: ${(result.result)}") }
+        scanViewPlugin.addScanResultListener { result ->
+            Log.d(
+                TAG,
+                "setupOnViewCreated: ${(result.result)}"
+            )
+        }
 
-        scanViewPlugin.setBarcodeFormats(BarcodeFormat.AZTEC, BarcodeFormat.QR_CODE) //Mandatory not optional
+        scanViewPlugin.setBarcodeFormats(
+            BarcodeFormat.AZTEC,
+            BarcodeFormat.QR_CODE
+        ) //Mandatory not optional
 
         scanViewPlugin.addScannedBarcodesListener { scanResult ->
             val base64Result: String = scanResult.result[0]?.value.toString()
@@ -67,6 +75,7 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
 
     override fun onResume() {
         super.onResume()
+
         binding.barcodeScanView.start()
     }
 
@@ -74,20 +83,14 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
         super.onPause()
 
         binding.barcodeScanView.stop()
-
-
         binding.barcodeScanView.releaseCameraInBackground()
     }
 
     override fun onCameraOpened(cameraController: CameraController?, width: Int, height: Int) {
-        //the camera is opened async and this is called when the opening is finished
         Log.d(TAG, "Camera opened successfully. Frame resolution $width x $height")
     }
 
     override fun onCameraError(e: java.lang.Exception?) {
-        //This is called if the camera could not be opened.
-        // (e.g. If there is no camera or the permission is denied)
-        // This is useful to present an alternative way to enter the required data if no camera exists.
         throw RuntimeException(e)
     }
 }
