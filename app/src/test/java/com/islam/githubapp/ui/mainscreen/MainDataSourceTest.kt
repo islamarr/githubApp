@@ -2,13 +2,12 @@ package com.islam.githubapp.ui.mainscreen
 
 import androidx.paging.PagingSource
 import com.islam.githubapp.data.repositories.FakeMainRepositoryTest
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainDataSourceTest  {
+class MainDataSourceTest {
 
     private val userFactory = UserFactory()
 
@@ -20,9 +19,7 @@ class MainDataSourceTest  {
 
     @Test
     fun `load Returns Page When OnSuccessfulLoad Of Page Keyed Data`() = runBlockingTest {
-
-        val pagingSource = MainDataSource("user", FakeMainRepositoryTest())
-
+        val pagingSource = MainDataSource("user", FakeMainRepositoryTest(fakeUsers))
         kotlin.test.assertEquals(
 
             expected = PagingSource.LoadResult.Page(
@@ -37,9 +34,7 @@ class MainDataSourceTest  {
                     placeholdersEnabled = false
                 )
             )
-
         )
-
     }
 
 }

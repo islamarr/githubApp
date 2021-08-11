@@ -1,23 +1,16 @@
 package com.islam.githubapp.ui.mainscreen
 
-import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.islam.githubapp.R
 import com.islam.githubapp.databinding.MainFragmentBinding
-import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.ui.BaseFragment
 import com.islam.githubapp.ui.adapters.MainAdapter
 import com.islam.githubapp.ui.adapters.MainLoadStateAdapter
-import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -136,7 +129,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
 
         when (item.itemId) {
             R.id.scan -> {
-               // findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
+                // findNavController().navigate(R.id.action_mainFragment_to_scannerFragment)
             }
         }
 

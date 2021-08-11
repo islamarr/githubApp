@@ -24,7 +24,7 @@
         android:id="@+id/mainFragment"
         android:name="com.islam.githubapp.ui.mainscreen.MainFragment"
         android:label="manufacturer_fragment"
-        tools:layout="@layout/item_list">
+        tools:layout="@layout/user_list">
 
         <action
             android:id="@+id/action_mainFragment_to_userDetailsFragment"
