@@ -18,41 +18,34 @@ class MainViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: MainViewModel
-
     val userFactory = UserFactory()
 
-    private val mockUsers = listOf(
+    private val fakeUsers = listOf(
         userFactory.createUser(),
         userFactory.createUser(),
         userFactory.createUser()
     )
 
     @Test
-    fun itemKeyedSubredditPagingSource() = runBlockingTest {
+    fun `load Returns Page When OnSuccessfulLoad Of Page Keyed Data`() = runBlockingTest {
 
-        val pagingSource = MainDataSource("islam", FakeMainRepositoryTest())
+        val pagingSource = MainDataSource("user", FakeMainRepositoryTest())
 
-       /* assertEquals(
-            expected = Pager(
-                config = PagingConfig(
-                    pageSize = 3,
-                    enablePlaceholders = false,
-                    initialLoadSize = 3
-                ),
-                pagingSourceFactory = {
-                    pagingSource
-                }
+        assertEquals(
+            expected = PagingSource.LoadResult.Page(
+                data = fakeUsers,
+                prevKey = null,
+                nextKey = fakeUsers[1].id
             ),
             actual = pagingSource.load(
                 PagingSource.LoadParams.Refresh(
                     key = null,
-                    loadSize = 2,
+                    loadSize = 3,
                     placeholdersEnabled = false
                 )
             )
 
-        )*/
+        )
 
 
     }
