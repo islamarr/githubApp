@@ -1,24 +1,16 @@
 package com.islam.githubapp.ui.mainscreen
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import com.islam.githubapp.data.repositories.FakeMainRepositoryTest
-import com.islam.githubapp.generalUtils.Const
+import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Rule
 import org.junit.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainViewModelTest {
+class MainDataSourceTest  {
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    val userFactory = UserFactory()
+    private val userFactory = UserFactory()
 
     private val fakeUsers = listOf(
         userFactory.createUser(),
@@ -31,7 +23,8 @@ class MainViewModelTest {
 
         val pagingSource = MainDataSource("user", FakeMainRepositoryTest())
 
-        assertEquals(
+        kotlin.test.assertEquals(
+
             expected = PagingSource.LoadResult.Page(
                 data = fakeUsers,
                 prevKey = null,
@@ -47,6 +40,6 @@ class MainViewModelTest {
 
         )
 
-
     }
+
 }
