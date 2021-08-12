@@ -35,12 +35,12 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
         }
 
         try {
-            binding.barcodeScanView.init("barcode_view_config.json")
+            binding?.barcodeScanView?.init("barcode_view_config.json")
         } catch (e: Exception) {
             Log.d(TAG, "setupOnViewCreated: $e")
         }
 
-        binding.barcodeScanView.setCameraOpenListener(this)
+        binding?.barcodeScanView?.setCameraOpenListener(this)
 
 
         val barcodeScanviewPluginConfig =
@@ -52,9 +52,9 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
         val barcodeBaseScanViewConfig =
             BaseScanViewConfig(requireContext(), "barcode_view_config.json")
 
-        binding.barcodeScanView.setScanViewConfig(barcodeBaseScanViewConfig)
+        binding?.barcodeScanView?.setScanViewConfig(barcodeBaseScanViewConfig)
 
-        binding.barcodeScanView.scanViewPlugin = scanViewPlugin
+        binding?.barcodeScanView?.scanViewPlugin = scanViewPlugin
 
         scanViewPlugin.addScanResultListener { result ->
             Log.d(
@@ -76,14 +76,14 @@ class ScannerFragment : BaseFragment<FragmentScannerBinding>(), CameraOpenListen
     override fun onResume() {
         super.onResume()
 
-        binding.barcodeScanView.start()
+        binding?.barcodeScanView?.start()
     }
 
     override fun onPause() {
         super.onPause()
 
-        binding.barcodeScanView.stop()
-        binding.barcodeScanView.releaseCameraInBackground()
+        binding?.barcodeScanView?.stop()
+        binding?.barcodeScanView?.releaseCameraInBackground()
     }
 
     override fun onCameraOpened(cameraController: CameraController?, width: Int, height: Int) {

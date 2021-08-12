@@ -44,22 +44,22 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             when {
                 isEmptyList -> {
 
-                    binding.starterImage.visibility = View.VISIBLE
-                    binding.listLayout.list.visibility = View.GONE
+                    binding?.starterImage?.visibility = View.VISIBLE
+                    binding?.listLayout?.list?.visibility = View.GONE
 
                 }
                 loadState.refresh is LoadState.Loading -> {
 
-                    binding.starterImage.visibility = View.GONE
-                    binding.listLayout.list.visibility = View.VISIBLE
-                    binding.listLayout.emptyList.visibility = View.GONE
-                    binding.listLayout.loadingProgressBar.visibility = View.VISIBLE
+                    binding?.starterImage?.visibility = View.GONE
+                    binding?.listLayout?.list?.visibility = View.VISIBLE
+                    binding?.listLayout?.emptyList?.visibility = View.GONE
+                    binding?.listLayout?.loadingProgressBar?.visibility = View.VISIBLE
 
                 }
                 else -> {
 
-                    binding.listLayout.emptyList.visibility = View.GONE
-                    binding.listLayout.loadingProgressBar.visibility = View.GONE
+                    binding?.listLayout?.emptyList?.visibility = View.GONE
+                    binding?.listLayout?.loadingProgressBar?.visibility = View.GONE
 
                     val errorState = when {
                         loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -69,9 +69,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                     }
 
                     errorState?.let {
-                        binding.listLayout.list.visibility = View.GONE
-                        binding.listLayout.emptyList.visibility = View.VISIBLE
-                        binding.listLayout.emptyList.text =
+                        binding?.listLayout?.list?.visibility = View.GONE
+                        binding?.listLayout?.emptyList?.visibility = View.VISIBLE
+                        binding?.listLayout?.emptyList?.text =
                             getString(R.string.no_internet_connection)
                     }
 
@@ -83,13 +83,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private fun initRecyclerView() {
 
-        binding.listLayout.list.apply {
+        binding?.listLayout?.list?.apply {
             mainAdapter = MainAdapter()
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = mainAdapter
         }
 
-        binding.listLayout.list.adapter = mainAdapter.withLoadStateHeaderAndFooter(
+        binding?.listLayout?.list?.adapter = mainAdapter.withLoadStateHeaderAndFooter(
             header = MainLoadStateAdapter(mainAdapter),
             footer = MainLoadStateAdapter(mainAdapter)
         )

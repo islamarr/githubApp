@@ -8,6 +8,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.islam.githubapp.databinding.FragmentUserDetailsBinding
@@ -27,8 +29,8 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     private val callback: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.webView.canGoBack()) {
-                    binding.webView.goBack()
+                if (binding?.webView?.canGoBack() == true) {
+                    binding?.webView?.goBack()
                 } else {
                     findNavController().popBackStack()
                 }
@@ -43,16 +45,16 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
         username = args.userId
         url = "${Const.profileBaseUrl}$username"
 
-        binding.webView.webViewClient = object : WebViewClient() {
+        binding?.webView?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                binding.loading.visibility = View.GONE
+                binding?.loading?.visibility = View.GONE
             }
         }
 
-        val webSettings: WebSettings = binding.webView.settings
+        val webSettings: WebSettings = binding?.webView?.settings!!
         webSettings.javaScriptEnabled = true
-        binding.webView.loadUrl(url)
+        binding?.webView?.loadUrl(url)
 
     }
 
