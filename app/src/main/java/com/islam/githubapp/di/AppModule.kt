@@ -38,17 +38,25 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideAPI(connectivityInterCeptor: ConnectivityInterCeptor): MyTaskApi {
-        val interceptor = HttpLoggingInterceptor()
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return httpLoggingInterceptor
+    }
 
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+    @Singleton
+    @Provides
+    fun provideAPI(
+        connectivityInterCeptor: ConnectivityInterCeptor,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): MyTaskApi {
 
         val okkHttpclient = OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(connectivityInterCeptor)
-            .addInterceptor(interceptor)
+            .addInterceptor(httpLoggingInterceptor)
             .build()
 
         val gson = GsonBuilder()
@@ -62,6 +70,7 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(MyTaskApi::class.java)
+
     }
 
 }
