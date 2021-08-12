@@ -47,7 +47,12 @@
         android:id="@+id/userDetailsFragment"
         android:name="com.islam.githubapp.ui.userDetails.UserDetailsFragment"
         android:label="fragment_user_details"
-        tools:layout="@layout/fragment_user_details" />
+        tools:layout="@layout/fragment_user_details" >
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/scannerFragment"

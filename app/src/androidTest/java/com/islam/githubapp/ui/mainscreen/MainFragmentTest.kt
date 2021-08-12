@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
@@ -14,8 +16,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.islam.githubapp.R
+import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.launchFragmentInHiltContainer
 import com.islam.githubapp.ui.adapters.MainAdapter
+import com.islam.task.utils.EspressoIdlingResourceRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +29,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 @MediumTest
@@ -35,9 +41,14 @@ class MainFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    @get: Rule
+    val espressoIdlingResoureRule = EspressoIdlingResourceRule()
+
+    lateinit var scenario: Unit
+
     @Before
     fun setup() {
-        launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
+        // scenario = launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
     }
 
     @Test
@@ -76,6 +87,33 @@ class MainFragmentTest {
                     0,
                     hasDescendant(withText("name_1"))
                 )
+            )
+        )
+
+    }
+
+    @Test
+    fun clickOneItem_navigateToUserDetails() {
+
+        val navController = mock(NavController::class.java)
+
+        launchFragmentInHiltContainer<MainFragment> {
+            Navigation.setViewNavController(this.view!!, navController)
+        }
+        onView(withId(R.id.search)).perform(click())
+        onView(isAssignableFrom(EditText::class.java)).perform(
+            typeText("name_1"),
+            pressKey(KeyEvent.KEYCODE_ENTER)
+        )
+        closeSoftKeyboard()
+        onView(withId(R.id.list))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, click()))
+
+        val bundle = Bundle()
+        bundle.putString(Const.UserDetailsKey, "name_1")
+        verify(navController).navigate(
+            MainFragmentDirections.actionMainFragmentToUserDetailsFragment(
+                "name_1"
             )
         )
 

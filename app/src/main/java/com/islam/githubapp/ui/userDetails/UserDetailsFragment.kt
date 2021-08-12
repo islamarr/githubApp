@@ -9,6 +9,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.islam.githubapp.databinding.FragmentUserDetailsBinding
 import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.ui.BaseFragment
@@ -18,6 +19,7 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
 
     private var username: String? = null
     private lateinit var url: String
+    private val args: UserDetailsFragmentArgs by navArgs()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUserDetailsBinding
         get() = FragmentUserDetailsBinding::inflate
@@ -38,10 +40,8 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
 
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
-        arguments?.let {
-            username = it.getString(Const.UserDetailsKey)
-            url = "${Const.profileBaseUrl}$username"
-        }
+        username = args.userId
+        url = "${Const.profileBaseUrl}$username"
 
         binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {

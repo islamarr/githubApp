@@ -18,6 +18,7 @@ import com.islam.githubapp.R
 import com.islam.githubapp.databinding.OneItemListBinding
 import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.generalUtils.Utils
+import com.islam.githubapp.ui.mainscreen.MainFragmentDirections
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
@@ -80,11 +81,8 @@ class MainAdapter : PagingDataAdapter<UserResponse, MainAdapter.ViewHolder>(DIFF
     }
 
     private fun navigateToUserDetails(view: View, listItems: UserResponse) {
-        val bundle = Bundle()
-        bundle.putString(Const.UserDetailsKey, listItems.username)
         view.findNavController().navigate(
-            R.id.action_mainFragment_to_userDetailsFragment,
-            bundle
+            MainFragmentDirections.actionMainFragmentToUserDetailsFragment(listItems.username)
         )
     }
 

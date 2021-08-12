@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.islam.githubapp.R
-import com.islam.githubapp.databinding.MainFragmentBinding
+import com.islam.githubapp.databinding.FragmentMainBinding
 import com.islam.githubapp.ui.BaseFragment
 import com.islam.githubapp.ui.adapters.MainAdapter
 import com.islam.githubapp.ui.adapters.MainLoadStateAdapter
@@ -16,17 +16,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-private const val TAG = "MainFragment"
-
 @AndroidEntryPoint
-class MainFragment : BaseFragment<MainFragmentBinding>() {
+class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var mainAdapter: MainAdapter
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> MainFragmentBinding
-        get() = MainFragmentBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding
+        get() = FragmentMainBinding::inflate
 
     override fun setupOnViewCreated(view: View) {
 
