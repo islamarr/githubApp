@@ -44,20 +44,15 @@ class MainFragmentTest {
     @get: Rule
     val espressoIdlingResoureRule = EspressoIdlingResourceRule()
 
-    lateinit var scenario: Unit
-
-    @Before
-    fun setup() {
-        // scenario = launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
-    }
-
     @Test
     fun launchFragmentReturnsStarterImageAtFirstLaunch() {
+        launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
         onView(withId(R.id.starterImage)).check(matches(isDisplayed()))
     }
 
     @Test
     fun loadsTheDefaultResults() {
+        launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
         onView(withId(R.id.list)).check { view, noViewFoundException ->
             if (noViewFoundException != null) {
                 throw noViewFoundException
@@ -70,12 +65,13 @@ class MainFragmentTest {
 
     @Test
     fun checkToolbarSearchIcon() {
+        launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
         onView(withId(R.id.search)).check(matches(isDisplayed()))
     }
 
     @Test
     fun searchForNameReturnsList() {
-
+        launchFragmentInHiltContainer<MainFragment>(Bundle(), R.style.Theme_MyTask)
         onView(withId(R.id.search)).perform(click())
         onView(isAssignableFrom(EditText::class.java)).perform(
             typeText("name_1"),
@@ -89,7 +85,6 @@ class MainFragmentTest {
                 )
             )
         )
-
     }
 
     @Test
