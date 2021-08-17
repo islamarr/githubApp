@@ -19,7 +19,7 @@ class MainDataSourceTest {
 
     @Test
     fun `load Returns Page When OnSuccessfulLoad Of Page Keyed Data`() = runBlockingTest {
-        val pagingSource = MainDataSource("user", FakeMainRepositoryTest(fakeUsers))
+        val pagingSource = MainDataSource("user", FakeMainRepositoryTest(fakeUsers, false))
         kotlin.test.assertEquals(
 
             expected = PagingSource.LoadResult.Page(

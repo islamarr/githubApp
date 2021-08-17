@@ -4,9 +4,10 @@ import com.islam.githubapp.data.Resource
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserListResponse
 import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserResponse
 
-class FakeMainRepositoryTest(private val fakeUsers: List<UserResponse>) : MainRepository {
-
-    private var shouldReturnNetworkError = false
+class FakeMainRepositoryTest(
+    private val fakeUsers: List<UserResponse>,
+    private var shouldReturnNetworkError: Boolean
+) : MainRepository {
 
     override suspend fun searchUsers(
         query: String,
