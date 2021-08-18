@@ -59,15 +59,11 @@ object AppModule {
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
-
         val retrofit = Retrofit.Builder()
             .client(okkHttpclient)
             .baseUrl(Utils.getUrl())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         return retrofit.create(GitHubService::class.java)
