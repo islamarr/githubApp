@@ -4,7 +4,7 @@ import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserLis
 import retrofit2.Response
 import retrofit2.http.*
 
-interface MyTaskApi {
+interface GitHubService {
 
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("search/users")

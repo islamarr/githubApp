@@ -2,7 +2,7 @@ package com.islam.githubapp.data.repositories
 
 import android.util.Log
 import com.islam.githubapp.data.Resource
-import com.islam.githubapp.data.network.MyTaskApi
+import com.islam.githubapp.data.network.GitHubService
 import com.islam.githubapp.generalUtils.ApiException
 import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.generalUtils.NoInternetException
@@ -10,7 +10,7 @@ import com.kharismarizqii.githubuserapp.core.data.source.remote.response.UserLis
 import javax.inject.Inject
 
 
-class DefaultMainRepository @Inject constructor(private val api: MyTaskApi) : MainRepository {
+class DefaultMainRepository @Inject constructor(private val api: GitHubService) : MainRepository {
 
     override suspend fun searchUsers(query: String, page: Int, pageSize: Int): Resource<UserListResponse> {
         return try {

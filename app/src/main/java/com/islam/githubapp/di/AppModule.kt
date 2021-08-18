@@ -2,7 +2,7 @@ package com.islam.githubapp.di
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import com.islam.githubapp.data.network.MyTaskApi
+import com.islam.githubapp.data.network.GitHubService
 import com.islam.githubapp.data.network.internet.ConnectivityInterCeptor
 import com.islam.githubapp.data.network.internet.ConnectivityInterCeptorImpl
 import com.islam.githubapp.data.repositories.DefaultMainRepository
@@ -27,7 +27,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(api: MyTaskApi) =
+    fun provideMainRepository(api: GitHubService) =
         DefaultMainRepository(api) as MainRepository
 
     @Singleton
@@ -49,7 +49,7 @@ object AppModule {
     fun provideAPI(
         connectivityInterCeptor: ConnectivityInterCeptor,
         httpLoggingInterceptor: HttpLoggingInterceptor
-    ): MyTaskApi {
+    ): GitHubService {
 
         val okkHttpclient = OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
@@ -63,13 +63,14 @@ object AppModule {
             .setLenient()
             .create()
 
-        return Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .client(okkHttpclient)
             .baseUrl(Utils.getUrl())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(MyTaskApi::class.java)
+
+        return retrofit.create(GitHubService::class.java)
 
     }
 
