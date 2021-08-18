@@ -41,8 +41,6 @@ class MainFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @get: Rule
-    val espressoIdlingResoureRule = EspressoIdlingResourceRule()
 
     @Test
     fun launchFragmentReturnsStarterImageAtFirstLaunch() {
@@ -104,8 +102,6 @@ class MainFragmentTest {
         onView(withId(R.id.list))
             .perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, click()))
 
-        val bundle = Bundle()
-        bundle.putString(Const.UserDetailsKey, "name_1")
         verify(navController).navigate(
             MainFragmentDirections.actionMainFragmentToUserDetailsFragment(
                 "name_1"

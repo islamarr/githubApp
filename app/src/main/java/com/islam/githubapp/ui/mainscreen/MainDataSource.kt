@@ -35,8 +35,11 @@ class MainDataSource(private val query: String, private val repository: MainRepo
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, UserResponse>): Int {
-        return 0
+    override fun getRefreshKey(state: PagingState<Int, UserResponse>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
 
