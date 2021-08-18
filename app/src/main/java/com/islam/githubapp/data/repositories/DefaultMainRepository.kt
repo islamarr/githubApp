@@ -14,7 +14,7 @@ class DefaultMainRepository @Inject constructor(private val api: GitHubService) 
 
     override suspend fun searchUsers(query: String, page: Int, pageSize: Int): Resource<UserListResponse> {
         return try {
-            val response = api.searchUsers(Const.token, query, page, pageSize)
+            val response = api.searchUsers(query, page, pageSize)
             if (response.isSuccessful) {
                 response.body()?.let {
                     return@let Resource.Success(it)

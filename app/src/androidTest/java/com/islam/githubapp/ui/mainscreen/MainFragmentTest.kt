@@ -16,16 +16,13 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.islam.githubapp.R
-import com.islam.githubapp.generalUtils.Const
 import com.islam.githubapp.launchFragmentInHiltContainer
 import com.islam.githubapp.ui.adapters.MainAdapter
-import com.islam.task.utils.EspressoIdlingResourceRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.Matcher
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

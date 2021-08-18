@@ -9,7 +9,6 @@ interface GitHubService {
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("search/users")
     suspend fun searchUsers(
-        @Header("Authorization") token: String,
         @Query("q") q: String,
         @Query("page") page: Int,
         @Query("per_page") pageSize: Int,
