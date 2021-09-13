@@ -12,4 +12,3 @@
 9- Navigation component <br>
 10- Data Binding <br>
 11- Unit testing (local tests + instrumented tests) <br>
-12- Anyline SDK
